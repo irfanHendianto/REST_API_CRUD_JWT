@@ -9,13 +9,13 @@ const app = express();
 connectionDB()
 app.use(express.json());
 app.use(cors());
-app.get("/",(req,res) => res.send("Hello"))
+app.get("/",(req,res) => res.send("Hello , Welcome "))
 app.use(bodyParser.urlencoded({
     extended: true
 }))
 app.use(bodyParser.json())
 app.use(`/api`, routes.routes);
 
-const port = config.port || 3000
+const port = config.port || 8080
 app.listen(config.port, () => console.log("App Listening on url http://localhost:" + port));
 
