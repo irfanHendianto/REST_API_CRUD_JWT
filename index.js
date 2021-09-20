@@ -16,6 +16,6 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 app.use(`/api`, routes.routes);
 
-const port = config.port || 8080
-app.listen(config.port, () => console.log("App Listening on url http://localhost:" + port));
+const ports = config.port || 8080
+app.listen(config.port, () => console.log("App Listening on url http://localhost:" + ports));
 
