@@ -5,7 +5,7 @@ const upload = require('../utils/multer');
 const {getAllCategory,addCategory,getFavoriteCategory,updateCategory} =require('../controllers/courseCategoryController');
 const {getAllCourse,addCourse,getDetailCourses,updateCourse,deleteCourses,getTotalCourses,sortingData,searchCourses} = require('../controllers/courseController')
 const {register,login} = require('../controllers/AuthController');
-const {getTotalUser,deleteUser} = require('../controllers/UserController');
+const {getTotalUser,deleteUser,assignAdmin,assignTutor,getAllTutor,sendEmailFuntion,getEmailUser,AssignTutorForhistory,getDetailUser} = require('../controllers/UserController');
 
 // Auth
 router.post('/auth/register',register)
@@ -14,6 +14,13 @@ router.post('/auth/login',login)
 // User
 router.get('/user/total',verify,getTotalUser)
 router.put('/user/delete/:id',verify,deleteUser)
+router.put('/user/assign/:id',verify,assignAdmin)
+// router.put('/user/tutor/:id',verify,assignTutor)
+router.post('/user/tutor/:id',verify,AssignTutorForhistory)
+router.get('/user/tutor',verify,getAllTutor)
+router.post('/user/sendemail',verify,sendEmailFuntion)
+router.get('/user/email',verify,getEmailUser)
+router.get('/user/detail/:id',verify,getDetailUser)
 
 // Category
 router.get('/category' ,verify,getAllCategory);

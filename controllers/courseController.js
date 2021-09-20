@@ -3,12 +3,49 @@ const mongoose = require('mongoose');
 const cloudinary = require('../utils/cloudinary');
 
 
+// const addCourse = async (req,res,next) =>{
+//     if(!req.user.admin) {
+//         return res.status(403).json({
+//             message: 'you are not an admin'
+//         })
+
+//     }
+
+//     const uploadBanner = await cloudinary.uploader.upload(req.file.path);
+//     var course = new Course(
+//         {
+//             nama_Course:req.body.nama_Course,
+//             price:req.body.price,
+//             duration:req.body.duration,
+//             description:req.body.description,
+//             create_Date:Date.now(),
+//             update_date :null,
+//             category_Id: req.body.category_Id,
+//             banner: uploadBanner.secure_url,
+//             cloudinary_Id: uploadBanner.public_id,
+//             tutor: req.body.tutor
+            
+//         }
+//         );
+//         course.save(err =>{
+//             if(!err){
+//                 res.status(200).json({
+//                     message: 'success !',
+//                 });
+//             }else{
+//                 res.send(err)
+//             }
+//          });
+       
+// }
 const addCourse = async (req,res,next) =>{
     if(!req.user.admin) {
         return res.status(403).json({
             message: 'you are not an admin'
         })
+
     }
+
     const uploadBanner = await cloudinary.uploader.upload(req.file.path);
     var course = new Course(
         {
@@ -20,7 +57,7 @@ const addCourse = async (req,res,next) =>{
             update_date :null,
             category_Id: req.body.category_Id,
             banner: uploadBanner.secure_url,
-            cloudinary_Id: uploadBanner.public_id
+            cloudinary_Id: uploadBanner.public_id,
             
         }
         );
@@ -52,21 +89,50 @@ const getAllCourse = async (req,res,next) =>{
 const getDetailCourses = async (req,res,next) =>{
 
       const idToSearch = mongoose.Types.ObjectId(req.params.id)
-
-      Course.aggregate([
+       Course.aggregate([
         { $match : {_id: idToSearch}},
         {
           $lookup: {
             from: "course_categories",
             localField: "category_Id",
             foreignField: "_id",
-            as: "category_Id",
+            as: "category_info",
           },
         },
+        { $unwind: "$category_info" },
         {
-          $unwind: "$category_Id",
+            $lookup: {
+              from: "assigns",
+              localField: "_id",
+              foreignField: "course_Id",
+              as: "assign_info",
+            },
+          },
+        { $match: { "assign_info.tutor": true } },
+        {
+            $lookup: {
+                from: "profiles",
+                localField: "assign_info.account_Id",
+                foreignField: "account_Id",
+                as: "profiles_tutor",
+            },
         },
-      
+        { $project: { 
+              "nama_Course": 1,
+              "price":1,
+              "duration":1,
+              "decription":1,
+              "banner": 1,
+              "cloudinary_Id": 1,
+              "category_info.nama_Category":1,
+              "category_info.nama_Category":1,
+              "category_info.rate":1,
+              "category_info._id":1,
+              "profiles_tutor._id":1,
+              "profiles_tutor.nama":1,
+              "profiles_tutor.account_Id":1
+            } 
+        }
       ])
         .then((result) => {
             res.json({

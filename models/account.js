@@ -26,6 +26,10 @@ const AccountSchema = new mongoose.Schema({
         type: Date,
         default:Date.now
     },
+    tutor: {
+        type: Boolean,
+        required: true
+    }
 })
 const Account = mongoose.model('account', AccountSchema);
 

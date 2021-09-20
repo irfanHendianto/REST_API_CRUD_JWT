@@ -31,7 +31,8 @@ const register = async (req,res,next) =>{
             admin: false,
             create_Date:Date.now(),
             update_date :null,
-            status: 1
+            status: 1,
+            tutor: false,
             
         }
     );

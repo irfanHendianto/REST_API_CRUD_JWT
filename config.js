@@ -13,7 +13,9 @@ const {
     TOKEN_SECRET,
     CLOUNDINARY_CLOUD_NAME,
     CLOUNDINARY_API_KEY,
-    CLOUNDINARY_API_SEARCH
+    CLOUNDINARY_API_SEARCH,
+    EMAIL,
+    PASS
 
 
 } = process.env
@@ -31,5 +33,7 @@ module.exports = {
     TOKEN_SECRET: TOKEN_SECRET,
     cloud_name: CLOUNDINARY_CLOUD_NAME,
     api_key: CLOUNDINARY_API_KEY,
-    api_secret : CLOUNDINARY_API_SEARCH
+    api_secret : CLOUNDINARY_API_SEARCH,
+    email : EMAIL,
+    pass : PASS
 }

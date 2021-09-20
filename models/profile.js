@@ -22,7 +22,7 @@ const ProfileSchema = new mongoose.Schema({
     },
     account_Id :{
         type : mongoose.Schema.Types.ObjectId,
-        ref : 'accounts'
+        ref : 'account'
     }
 })
 const Profile = mongoose.model('profile', ProfileSchema);

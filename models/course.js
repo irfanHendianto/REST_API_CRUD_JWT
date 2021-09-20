@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const { cloudinary_js_config } = require('../utils/cloudinary');
+
+
 const CourseSchema = new mongoose.Schema({
     nama_Course: {
         type: String,
@@ -27,7 +28,7 @@ const CourseSchema = new mongoose.Schema({
     },
     category_Id :{
         type : mongoose.Schema.Types.ObjectId,
-        ref : 'course_categories'
+        ref : 'course_Category'
     },
     banner :{
         type: String,
@@ -37,7 +38,7 @@ const CourseSchema = new mongoose.Schema({
     cloudinary_Id : {
         type: String,
         required: true,
-    }
+    },
 })
 const Course = mongoose.model('course', CourseSchema);
 
